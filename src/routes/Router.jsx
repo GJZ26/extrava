@@ -12,6 +12,8 @@ import Cart from '../pages/Cart'
 import ClientList from '../pages/ClientList'
 import EmployeesList from '../pages/EmployeesList'
 import Edit from '../pages/Edit'
+import ProductList from '../pages/ProductList'
+import CreateProduct from '../pages/CreateProduct'
 
 settings["uri"] = `${settings.app_protocol}://${settings.app_host}:${settings.app_port}`
 
@@ -32,13 +34,7 @@ export default function Router() {
                                 />
                             } />
 
-                            <Route path='/join' element={
-                                <PrivateRouter
-                                    require_authentication={false}
-                                    redirect_to="/"
-                                    component={<Register />}
-                                />
-                            } />
+                            <Route path='/join' element={<Register />} />
 
                             <Route path='/cart' element={
                                 <PrivateRouter
@@ -67,12 +63,30 @@ export default function Router() {
                                 />
                             } />
 
+                            <Route path='/add' element={
+                                <PrivateRouter
+                                    require_authentication={true}
+                                    redirect_to="/"
+                                    roles_admisibles={["admin"]}
+                                    component={<CreateProduct />}
+                                />
+                            } />
+
                             <Route path='/edit/:id' element={
                                 <PrivateRouter
                                     require_authentication={true}
                                     redirect_to="/"
                                     roles_admisibles={["admin"]}
                                     component={<Edit />}
+                                />
+                            } />
+
+                            <Route path='/products/' element={
+                                <PrivateRouter
+                                    require_authentication={true}
+                                    redirect_to="/"
+                                    roles_admisibles={["admin"]}
+                                    component={<ProductList />}
                                 />
                             } />
 

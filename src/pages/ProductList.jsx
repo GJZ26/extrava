@@ -102,7 +102,7 @@ function createData(name, lastname, email, valid) {
 }
 
 
-export default function ClientList() {
+export default function ProductList() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const { userAuthProvider } = React.useContext(AuthContext);
@@ -111,7 +111,7 @@ export default function ClientList() {
     const navigate = useNavigate()
 
     React.useEffect(() => {
-        axios.get(requester.uri + "/user/admin", { headers: { Authorization: `Bearer ${userAuthProvider.token}` } }).then((res) => {
+        axios.get(requester.uri + "/product/", { headers: { Authorization: `Bearer ${userAuthProvider.token}` } }).then((res) => {
             setData(res.data.content)
         }).catch((e) => {
             console.error(e)
@@ -134,8 +134,8 @@ export default function ClientList() {
 
     function deleteHandler(index, dbIndex) {
         setData(data.filter((elemento, indice) => indice !== index));
-        axios.delete(requester.uri + "/user/" + dbIndex, { headers: { Authorization: `Bearer ${userAuthProvider.token}` } }).then((res) => {
-            toast.success("Usuario eliminado.")
+        axios.delete(requester.uri + "/product/" + dbIndex, { headers: { Authorization: `Bearer ${userAuthProvider.token}` } }).then((res) => {
+            toast.success("Producto eliminado.")
         }).catch((e) => {
             console.error(e)
             toast.error(e.response.data.message)
@@ -168,11 +168,14 @@ export default function ClientList() {
                     marginBottom={0}
                     marginTop={4}
                 >
-                    Empleados
+                    Productos.
                 </Typography>
                 <Typography marginTop={0} marginBottom={5} component={'p'} variant="h5" align="center" color="text.secondary" paragraph>
-                    Gestiona tus empleados desde esta sección.
+                    Gestiona tus productos desde esta sección.
                 </Typography>
+                <Button variant='contained' sx={{ mb: 3 }} onClick={() => {
+                    navigate('/add')
+                }}>Añadir</Button>
             </Container>
             <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
                 <TableContainer component={Paper} style={{ minWidth: 500, maxWidth: 1150, width: 'fit-content' }}>
@@ -180,9 +183,7 @@ export default function ClientList() {
                         <TableBody sx={{ minWidth: 500, maxWidth: 1150 }}>
                             <TableRow sx={{ minWidth: 500, maxWidth: 1150 }}>
                                 <StyledTableCell>Nombre</StyledTableCell>
-                                <StyledTableCell align="left">Apellido</StyledTableCell>
-                                <StyledTableCell align="left">Correo</StyledTableCell>
-                                <StyledTableCell align="left">Válido hasta</StyledTableCell>
+                                <StyledTableCell align="left">Precio</StyledTableCell>
                                 <StyledTableCell align="left">Acciones</StyledTableCell>
                             </TableRow>
                             {(rowsPerPage > 0
@@ -194,13 +195,7 @@ export default function ClientList() {
                                         {row.name}
                                     </TableCell>
                                     <TableCell style={{ width: 160 }} align="left">
-                                        {row.lastname}
-                                    </TableCell>
-                                    <TableCell style={{ width: 160 }} align="left">
-                                        {row.email}
-                                    </TableCell>
-                                    <TableCell style={{ width: 160 }} align="left">
-                                        {row.active_until ? row.active_until : "Sin dato"}
+                                        ${row.price.toFixed(2)}
                                     </TableCell>
                                     <TableCell style={{ width: 160 }} align="left">
                                         <Button onClick={() => { deleteHandler(index, row.id) }} sx={{ color: "#d90e0e" }}><DeleteIcon /></Button>

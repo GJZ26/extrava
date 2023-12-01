@@ -24,6 +24,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { AuthContext } from '../context/UserContext';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -107,6 +108,7 @@ export default function ClientList() {
     const { userAuthProvider } = React.useContext(AuthContext);
     const requester = React.useContext(RequestsContext)
     const [data, setData] = React.useState([])
+    const navigate = useNavigate()
 
     React.useEffect(() => {
         axios.get(requester.uri + "/user/client", { headers: { Authorization: `Bearer ${userAuthProvider.token}` } }).then((res) => {
@@ -201,8 +203,8 @@ export default function ClientList() {
                                         {row.active_until ? row.active_until : "Sin dato"}
                                     </TableCell>
                                     <TableCell style={{ width: 160 }} align="left">
-                                        <Button onClick={() => { deleteHandler(index, row.id) }}><DeleteIcon /></Button>
-                                        <Button><EditIcon /></Button>
+                                        <Button onClick={() => { deleteHandler(index, row.id) }} sx={{ color: "#d90e0e" }}><DeleteIcon /></Button>
+                                        <Button onClick={() => { navigate('/edit/' + row.id) }}><EditIcon /></Button>
                                     </TableCell>
                                 </TableRow>
                             ))}

@@ -20,8 +20,12 @@ import { useNavigate } from 'react-router-dom';
 
 const pages = [['Tienda', '/shop'],];
 const protected_pages = [['Carrito', '/cart'],];
-const private_pages = [['Clientes', '/clients'], ['Empleados', '/employees'], ['Productos', '/products']];
-const settings = [['Profile', '/profile'], ['Logout', '/exit']];
+const private_pages = [['Clientes', '/clients'], ['Empleados', '/employees'],
+['Productos', '/products'],
+['Añadir usuario', '/join']];
+const settings = [
+    // ['Profile', '/profile'], 
+    ['Logout', '/exit']];
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
