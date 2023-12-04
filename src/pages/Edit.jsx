@@ -41,8 +41,8 @@ export default function Edit() {
 
     console.log(path_params)
 
-    React.useMemo(async () => {
-        await axios.get(requester.uri + '/user/pk/' + path_params.id, { headers: { Authorization: `Bearer ${userAuthProvider.token}` } }).then(
+    React.useEffect(() => {
+        axios.get(requester.uri + '/user/pk/' + path_params.id, { headers: { Authorization: `Bearer ${userAuthProvider.token}` } }).then(
             (res) => {
                 setDefData(res.data.content)
             }

@@ -7,6 +7,6 @@ export default function Exit() {
     const navigate = useNavigate()
 
     setAuthProvider(null, true)
-    navigate('/')
+    window.location.assign('/')
     return null
 }

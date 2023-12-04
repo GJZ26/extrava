@@ -16,7 +16,8 @@ import { styled } from "@mui/system";
 import axios from 'axios'
 import RequestsContext from '../context/RequestContext';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/UserContext';
+import { AuthContext, AuthContextProvider } from '../context/UserContext';
+import Navbar from '../components/Navbar';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -83,6 +84,10 @@ export default function Register() {
 
     return (
         <ThemeProvider theme={defaultTheme}>
+            {
+                userAuthProvider.auth ? <Navbar /> : <></>
+            }
+
             <Grid container component="main" sx={{ height: '100vh', flexDirection: 'row-reverse' }}>
                 <CssBaseline />
                 <Grid
@@ -112,7 +117,7 @@ export default function Register() {
                         }}
                     >
                         <Typography component="h1" variant="h4">
-                            Añade un nuevo usuario.
+                            {userAuthProvider.auth ? "Añade un nuevo usuario." : "Regístrate."}
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                             <CustomButton
@@ -122,7 +127,7 @@ export default function Register() {
                                     mb: 3
                                 }}
                             >
-                                Sube tu foto
+                                {userAuthProvider.auth ? "Suba  la foto de tu cliente." : "Sube tu foto."}
                                 <input
                                     accept="image/*"
                                     type="file"
@@ -239,20 +244,25 @@ export default function Register() {
                                 sx={{ mt: 5, mb: 2, bgcolor: "#d90e0e" }}
                                 disabled={showBtn}
                             >
-                                Inscribirse
+                                {userAuthProvider.auth ? "Añadir." : "Registrarse."}
+
                             </Button>
-                            <Grid container justifyContent="space-between">
-                                <Grid item>
-                                    <Link href="/" variant="body2" sx={{ color: '#d90e0e' }}>
-                                        Volver
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <Link href="/access" variant="body2" sx={{ color: '#d90e0e' }}>
-                                        ¿Ya eres miembro? Inicia sesión aquí.
-                                    </Link>
-                                </Grid>
-                            </Grid>
+                            {
+                                !userAuthProvider.auth ?
+                                    <Grid container justifyContent="space-between">
+                                        <Grid item>
+                                            <Link href="/" variant="body2" sx={{ color: '#d90e0e' }}>
+                                                Volver
+                                            </Link>
+                                        </Grid>
+                                        <Grid item>
+                                            <Link href="/access" variant="body2" sx={{ color: '#d90e0e' }}>
+                                                ¿Ya eres miembro? Inicia sesión aquí.
+                                            </Link>
+                                        </Grid>
+                                    </Grid> :
+                                    <></>
+                            }
                         </Box>
                     </Box>
                 </Grid>

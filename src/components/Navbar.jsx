@@ -18,11 +18,18 @@ import RequestsContext from '../context/RequestContext';
 import { useNavigate } from 'react-router-dom';
 
 
-const pages = [['Tienda', '/shop'],];
-const protected_pages = [['Carrito', '/cart'],];
+const pages = [ // cualquiera puede verlo
+    ['Tienda', '/shop'],
+];
+const protected_pages = [['Carrito', '/cart'],]; // clientes
+
 const private_pages = [['Clientes', '/clients'], ['Empleados', '/employees'],
 ['Productos', '/products'],
-['Añadir usuario', '/join']];
+['Añadir usuario', '/join'],
+['Membresias', '/memberships'],
+]; // Administradores
+
+
 const settings = [
     // ['Profile', '/profile'], 
     ['Logout', '/exit']];

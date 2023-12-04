@@ -3,6 +3,7 @@ import { AuthContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 export default function PrivateRouter({ component, roles_admisibles = [null], redirect_to, require_authentication = true }) {
+
     const { userAuthProvider } = useContext(AuthContext);
     const navigate = useNavigate();
 
